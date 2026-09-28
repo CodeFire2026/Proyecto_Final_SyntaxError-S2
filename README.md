@@ -8,7 +8,7 @@
 
 ## `Descripción:`
 
-En este proyecto llevaremos a cabo la conversión del **Juego Ahorcado** originalmente desarrollado en PSEint a lenguaje de **Java**, afrontando los desafíos técnicos que se presenten durante la migración. 
+En este proyecto llevaremos a cabo la conversión del **MiniJuego** originalmente desarrollado en PSEint a lenguaje de **Java**, afrontando los desafíos técnicos que se presenten durante la migración. 
 Para la organización del equipo utilizaremos la metodología scrum, lo que nos permitirá distribuir las tareas de manera equitativa y optimizar el trabajo colaborativo.
 
 

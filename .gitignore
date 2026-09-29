@@ -1,0 +1,11 @@
+**/target/
+
+**/nbproject/private/
+ProyectoFinal/build/
+ProyectoFinal/dist/
+
+*.class
+
+.DS_Store
+Thumbs.db
+Desktop.ini

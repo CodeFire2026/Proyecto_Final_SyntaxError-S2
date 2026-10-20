@@ -1,4 +1,4 @@
-package Juego;
+package syntaxError.proyectofinal.minijuegos.Ahorcado;
 
 import javax.swing.JOptionPane;
 

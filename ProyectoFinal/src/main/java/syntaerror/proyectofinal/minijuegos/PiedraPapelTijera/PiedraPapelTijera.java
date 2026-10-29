@@ -1,4 +1,5 @@
-package domain;
+
+package syntaerror.proyectofinal.minijuegos.PiedraPapelTijera;
 
 import javax.swing.JOptionPane;
 

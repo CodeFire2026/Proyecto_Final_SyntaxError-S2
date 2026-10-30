@@ -210,3 +210,154 @@ class Juego {
     }
 }
 
+
+
+//PARTE DE RODRIGO
+
+
+class Tablero {
+
+    private char[][] celdas;
+
+    public Tablero() {
+        celdas = new char[3][3];
+        inicializar();
+    }
+
+    public void inicializar() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                celdas[i][j] = ' ';
+            }
+        }
+    }
+
+ 
+    public char get(int fila, int col) {
+        return celdas[fila - 1][col - 1];
+    }
+
+   
+    public void colocar(int fila, int col, char ficha) {
+        celdas[fila - 1][col - 1] = ficha;
+    }
+
+    
+    public void mostrar() {
+        System.out.println("        COLUMNAS");
+        System.out.println("        1     2     3");
+        System.out.println("     -------------------");
+
+        for (int i = 1; i <= 3; i++) {
+
+            if (i == 2) {
+                System.out.print("FILA " + i + " |");
+            } else {
+                System.out.print("     " + i + " |");
+            }
+
+            for (int j = 1; j <= 3; j++) {
+                System.out.print("  " + celdas[i - 1][j - 1] + "  |");
+            }
+
+            System.out.println();
+            System.out.println("     -------------------");
+        }
+    }
+
+    
+    public boolean movimientoValido(int fila, int col) {
+        if (fila >= 1 && fila <= 3 && col >= 1 && col <= 3) {
+            if (celdas[fila - 1][col - 1] == ' ') {
+                return true;
+            } else {
+                System.out.println("Casilla ocupada");
+                return false;
+            }
+        } else {
+            System.out.println("Posición inválida");
+            return false;
+        }
+    }
+
+    
+    public char verificarGanador() {
+        char ganador = ' ';
+
+        
+        for (int i = 1; i <= 3; i++) {
+            if (get(i, 1) != ' ' && get(i, 1) == get(i, 2) && get(i, 2) == get(i, 3)) {
+                ganador = get(i, 1);
+            }
+        }
+
+        
+        for (int i = 1; i <= 3; i++) {
+            if (get(1, i) != ' ' && get(1, i) == get(2, i) && get(2, i) == get(3, i)) {
+                ganador = get(1, i);
+            }
+        }
+
+        
+        if (get(1, 1) != ' ' && get(1, 1) == get(2, 2) && get(2, 2) == get(3, 3)) {
+            ganador = get(1, 1);
+        }
+
+        
+        if (get(1, 3) != ' ' && get(1, 3) == get(2, 2) && get(2, 2) == get(3, 1)) {
+            ganador = get(1, 3);
+        }
+
+        return ganador;
+    }
+}
+
+
+class CPU {
+
+    private static final Random random = new Random();
+
+    
+    public static int[] decidirJugada(Tablero tablero) {
+
+        
+        int[] jugada = buscarMovimiento(tablero, 'O');
+
+        
+        if (jugada[0] == -1) {
+            jugada = buscarMovimiento(tablero, 'X');
+        }
+
+    
+        if (jugada[0] == -1) {
+            int fila, col;
+            do {
+                fila = random.nextInt(3) + 1;
+                col = random.nextInt(3) + 1;
+            } while (tablero.get(fila, col) != ' ');
+            jugada = new int[] { fila, col };
+        }
+
+        return jugada;
+    }
+
+    
+    private static int[] buscarMovimiento(Tablero tablero, char ficha) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                if (tablero.get(i, j) == ' ') {
+
+                    tablero.colocar(i, j, ficha);
+
+                    if (tablero.verificarGanador() == ficha) {
+                        tablero.colocar(i, j, ' ');
+                        return new int[] { i, j };
+                    }
+
+                    tablero.colocar(i, j, ' ');
+                }
+            }
+        }
+        return new int[] { -1, -1 };
+    }
+}

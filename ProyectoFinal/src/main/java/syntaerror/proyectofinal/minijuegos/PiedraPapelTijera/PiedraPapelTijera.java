@@ -2,38 +2,45 @@
 package syntaerror.proyectofinal.minijuegos.PiedraPapelTijera;
 
 import javax.swing.JOptionPane;
+import syntaerror.proyectofinal.helpers.MenuHelper;
 
 public class PiedraPapelTijera {
     int opcion, playUser, playPc, puntosUser, puntosPc;
     String nombreUser, nombrePc, resultado;
     
-    public void main(){ //Se llama main porque se es el principal, se encarga de llamar a los demás.
-        JOptionPane.showMessageDialog(null,"Juego Elegido:\n" +
-                    "----PIEDRA, PAPEL O TIJERA----" );
-        do{
+   public void main() {
 
-            opcion = Integer.parseInt(JOptionPane.showInputDialog("Elegí la modalidad:\n"+
-                     "1. Mejor de 1\n" +
-                     "2. Mejor de 3\n" +
-                     "3. Salir"));
+    JOptionPane.showMessageDialog(null,
+            "Juego elegido:\n" +
+            "---- PIEDRA, PAPEL O TIJERA ----");
 
-            switch (opcion){
-                case 1:
-                    this.opcionUno();
-                    break;
-                case 2:
-                    /* opcionDos*/
-                    break;
-                case 3:
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null,"Opción Incorrecta. Seleccione 1,2 o 3" );
-                    
-            }
-    
+    do {
 
-        }while (opcion != 3);
-    }
+        opcion = MenuHelper.solicitarOpcion();
+
+        switch (opcion) {
+
+            case 1:
+                this.opcionUno();
+                break;
+
+            case 2:
+                /*this.opcionDos();*/
+                break;
+
+            case 3:
+                JOptionPane.showMessageDialog(null,
+                        "Gracias por jugar. ¡Hasta pronto!");
+                break;
+
+            default:
+                JOptionPane.showMessageDialog(null,
+                        "Opción incorrecta. Seleccioná 1, 2 o 3.");
+                break;
+        }
+
+    } while (opcion != 3);
+}
     
     public void opcionUno(){
         String eleccionUser, eleccionPc;

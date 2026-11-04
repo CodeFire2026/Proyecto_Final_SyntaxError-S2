@@ -37,26 +37,26 @@ public class PiedraPapelTijera {
         do {
 
             opcion = solicitarNumero(
-                "===== PIEDRA, PAPEL O TIJERA =====\n\n"
-                + "Modo: " + (modo == 0 ? "Una partida" : "Al mejor de 3") + "\n"
-                + "Ronda: " + ronda + "\n"
-                + "Marcador de esta partida: " + victoriasJugador + " - " + victoriasPc + "\n\n"
-                + "1. Piedra\n"
-                + "2. Papel\n"
-                + "3. Tijera\n"
-                + "4. Volver al menú"
+                "🎮===== PIEDRA, PAPEL O TIJERA =====🎮\n\n"
+                + "🎯️ Modo: " + (modo == 0 ? "Una partida" : "Al mejor de 3") + "\n"
+                + "🔄 Ronda: " + ronda + "\n"
+                + "📊 Marcador: " + victoriasJugador + " - " + victoriasPc + "\n\n"
+                + "👉 Elegí tu jugada:\n"
+                + "1. 🔘 Piedra\n"
+                + "2. 📄 Papel\n"
+                + "3. ✂️ Tijera\n"
+                + "4. ⏪ Volver al menú"
             );
 
+
+
             if (opcion == 4 || opcion == -1) {
-                JOptionPane.showMessageDialog(null,
-                        "Partida interrumpida. Las rondas jugadas se conservan en las estadísticas.");
+                this.interrumpir();
                 return;
             }
 
             if (opcion < 1 || opcion > 3) {
-                JOptionPane.showMessageDialog(
-                    null, "Opción incorrecta."
-                );
+                this.opcionIncorrecta();
                 continue;
             }
 
@@ -94,17 +94,14 @@ public class PiedraPapelTijera {
 
             JOptionPane.showMessageDialog(
                 null,
-                "===== RESULTADO =====\n\n"
-                + jugador.getNombre() + ": "
-                + eleccionJugador + "\n"
-                + "Computadora: " + eleccionPc + "\n\n"
+                "🏆===== RESULTADO =====🏆\n\n"
+                + jugador.getNombre() + ": " + eleccionJugador + "\n"
+                + "🤖 Computadora: " + eleccionPc + "\n\n"
                 + resultado + "\n\n"
-                + "Marcador de esta partida: " + victoriasJugador + " - " + victoriasPc + "\n\n"
-                + "===== PUNTOS ACUMULADOS =====\n"
-                + jugador.getNombre() + ": "
-                + jugador.getPuntos() + "\n"
-                + "Computadora: "
-                + computadora.getPuntos()
+                + "📊 Marcador: " + victoriasJugador + " - " + victoriasPc + "\n\n"
+                + "⭐ Puntos acumulados ⭐\n"
+                + jugador.getNombre() + ": " + jugador.getPuntos() + "\n"
+                + "Computadora: " + computadora.getPuntos()
             );
 
             if (modo == 0 || victoriasJugador == 2 || victoriasPc == 2) {
@@ -170,6 +167,14 @@ public class PiedraPapelTijera {
                 null, "Estadísticas reiniciadas."
             );
         }
+    }
+    
+    public void  interrumpir() {
+        JOptionPane.showMessageDialog(null,  "Partida interrumpida. Las rondas jugadas se conservan en las estadísticas.");
+    }
+    
+    public void opcionIncorrecta() {
+        JOptionPane.showMessageDialog(null, "Opción incorrecta.");
     }
 
     public static int solicitarNumero(String mensaje) {

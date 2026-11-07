@@ -1,103 +1,202 @@
-
 package syntaerror.proyectofinal.minijuegos.PiedraPapelTijera;
 
 import javax.swing.JOptionPane;
-import syntaerror.proyectofinal.helpers.MenuHelper;
+import java.util.Random;
 
 public class PiedraPapelTijera {
-    int opcion, playUser, playPc, puntosUser, puntosPc;
-    String nombreUser, nombrePc, resultado;
-    
-   public void main() {
 
-    JOptionPane.showMessageDialog(null,
-            "Juego elegido:\n" +
-            "---- PIEDRA, PAPEL O TIJERA ----");
+    private Jugador jugador;
+    private Jugador computadora;
+    private Random random;
 
-    do {
+    public PiedraPapelTijera(String nombre) {
+        jugador = new Jugador(nombre);
+        computadora = new Jugador("Computadora");
+        random = new Random();
+    }
 
-        opcion = MenuHelper.solicitarOpcion();
+    public void jugar() {
 
-        switch (opcion) {
+        Object[] modos = {"Una partida", "Al mejor de 3", "Volver"};
+        int modo = JOptionPane.showOptionDialog(null,
+                "Elegí el modo de juego:\n"
+                + "Una partida: una ronda, puede terminar en empate.\n"
+                + "Al mejor de 3: gana quien logra 2 victorias.\n"
+                + "Los empates se repiten.",
+                "Modo de juego", JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, modos, modos[0]);
+        if (modo != 0 && modo != 1) {
+            return;
+        }
 
-            case 1:
-                this.opcionUno();
-                break;
+        int victoriasJugador = 0;
+        int victoriasPc = 0;
+        int ronda = 1;
+        int opcion;
 
-            case 2:
-                /*this.opcionDos();*/
-                break;
+        do {
 
-            case 3:
+            opcion = solicitarNumero(
+                "🎮===== PIEDRA, PAPEL O TIJERA =====🎮\n\n"
+                + "🎯️ Modo: " + (modo == 0 ? "Una partida" : "Al mejor de 3") + "\n"
+                + "🔄 Ronda: " + ronda + "\n"
+                + "📊 Marcador: " + victoriasJugador + " - " + victoriasPc + "\n\n"
+                + "👉 Elegí tu jugada:\n"
+                + "1. 🔘 Piedra\n"
+                + "2. 📄 Papel\n"
+                + "3. ✂️ Tijera\n"
+                + "4. ⏪ Volver al menú"
+            );
+
+
+
+            if (opcion == 4 || opcion == -1) {
+                this.interrumpir();
+                return;
+            }
+
+            if (opcion < 1 || opcion > 3) {
+                this.opcionIncorrecta();
+                continue;
+            }
+
+            int jugadaPc = random.nextInt(3) + 1;
+
+            String eleccionJugador = convertirJugada(opcion);
+            String eleccionPc = convertirJugada(jugadaPc);
+
+            String resultado;
+
+            if (opcion == jugadaPc) {
+
+                resultado = "¡EMPATE!";
+                jugador.empatar();
+                computadora.empatar();
+
+            } else if (
+                (opcion == 1 && jugadaPc == 3)
+                || (opcion == 2 && jugadaPc == 1)
+                || (opcion == 3 && jugadaPc == 2)
+            ) {
+
+                resultado = "¡GANASTE!";
+                jugador.ganar();
+                computadora.perder();
+                victoriasJugador++;
+
+            } else {
+
+                resultado = "¡PERDISTE!";
+                jugador.perder();
+                computadora.ganar();
+                victoriasPc++;
+            }
+
+            JOptionPane.showMessageDialog(
+                null,
+                "🏆===== RESULTADO =====🏆\n\n"
+                + jugador.getNombre() + ": " + eleccionJugador + "\n"
+                + "🤖 Computadora: " + eleccionPc + "\n\n"
+                + resultado + "\n\n"
+                + "📊 Marcador: " + victoriasJugador + " - " + victoriasPc + "\n\n"
+                + "⭐ Puntos acumulados ⭐\n"
+                + jugador.getNombre() + ": " + jugador.getPuntos() + "\n"
+                + "Computadora: " + computadora.getPuntos()
+            );
+
+            if (modo == 0 || victoriasJugador == 2 || victoriasPc == 2) {
+                String ganador = victoriasJugador == victoriasPc ? "¡Empate!"
+                        : victoriasJugador > victoriasPc ? "¡Ganaste la partida!"
+                        : "La computadora ganó la partida.";
                 JOptionPane.showMessageDialog(null,
-                        "Gracias por jugar. ¡Hasta pronto!");
-                break;
+                        "===== FIN DE LA PARTIDA =====\n\n" + ganador
+                        + "\nResultado final: " + victoriasJugador + " - " + victoriasPc);
+                return;
+            }
+            ronda++;
 
+        } while (true);
+    }
+
+    private String convertirJugada(int jugada) {
+
+        switch (jugada) {
+            case 1:
+                return "Piedra";
+            case 2:
+                return "Papel";
+            case 3:
+                return "Tijera";
             default:
-                JOptionPane.showMessageDialog(null,
-                        "Opción incorrecta. Seleccioná 1, 2 o 3.");
-                break;
+                return "Desconocida";
         }
+    }
 
-    } while (opcion != 3);
-}
+    public void mostrarEstadisticas() {
+
+        int partidas = jugador.getVictorias()
+                + jugador.getDerrotas()
+                + jugador.getEmpates();
+
+        JOptionPane.showMessageDialog(
+            null,
+            "===== ESTADÍSTICAS =====\n\n"
+            + "Jugador: " + jugador.getNombre() + "\n"
+            + "Rondas jugadas: " + partidas + "\n\n"
+            + "Victorias: " + jugador.getVictorias() + "\n"
+            + "Derrotas: " + jugador.getDerrotas() + "\n"
+            + "Empates: " + jugador.getEmpates() + "\n\n"
+            + "Puntos: " + jugador.getPuntos()
+        );
+    }
+
+    public void reiniciarPuntuacion() {
+
+        int respuesta = JOptionPane.showConfirmDialog(
+            null,
+            "¿Querés reiniciar las estadísticas?",
+            "Confirmación",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            jugador.reiniciar();
+            computadora.reiniciar();
+
+            JOptionPane.showMessageDialog(
+                null, "Estadísticas reiniciadas."
+            );
+        }
+    }
     
-    public void opcionUno(){
-        String eleccionUser, eleccionPc;
-        eleccionUser = "";
-        eleccionPc = "";
-        playUser = Integer.parseInt(JOptionPane.showInputDialog("Elegí tu jugada:\n"+
-                     "1. Piedra\n" +
-                     "2. Papel\n" +
-                     "3. Tijera"));
-        while(playUser < 1 || playUser > 3){
-        playUser = Integer.parseInt(JOptionPane.showInputDialog("Jugada Invalida. Elegí tu jugada:\n"+
-                     "1. Piedra\n" +
-                     "2. Papel\n" +
-                     "3. Tijera\n"));
-        }
-        // Número entero entre 1 y 3 (piedra=1, papel=2, tijera=3)
-        playPc = (int) (Math.random() * 3) + 1;         
-        
-        switch(playUser){ //Asignamos los valores para eleccionUser
-            case 1:
-                eleccionUser = "Piedra";
-                break;
-            case 2:
-                eleccionUser = "Papel";
-                break;
-            case 3:
-                eleccionUser = "Tijera";
-                break;
-        }
-        
-        switch(playPc){ //Asignamos los valores para eleccionPc
-            case 1:
-                eleccionPc = "Piedra";
-                break;
-            case 2:
-                eleccionPc = "Papel";
-                break;
-            case 3:
-                eleccionPc = "Tijera";
-                break;
-        }
-        
-        JOptionPane.showMessageDialog(null, "Vos: "+ eleccionUser);
-        JOptionPane.showMessageDialog(null, "Pc: "+ eleccionPc);
-        //Condicionamos los diferentes resultados
-        if (playUser == playPc){
-            this.resultado = "Empate";
-        }else{
-            if ((playUser == 1 && playPc == 3) ||
-                (playUser == 2 && playPc == 1) ||
-                (playUser == 3 && playPc == 2)){
-                
-                resultado = "Ganaste!!";
-            }else{
-                resultado = "Perdiste...";
+    public void  interrumpir() {
+        JOptionPane.showMessageDialog(null,  "Partida interrumpida. Las rondas jugadas se conservan en las estadísticas.");
+    }
+    
+    public void opcionIncorrecta() {
+        JOptionPane.showMessageDialog(null, "Opción incorrecta.");
+    }
+
+    public static int solicitarNumero(String mensaje) {
+
+        while (true) {
+
+            String entrada = JOptionPane.showInputDialog(
+                null, mensaje
+            );
+
+            if (entrada == null) {
+                return -1;
+            }
+
+            try {
+                return Integer.parseInt(entrada.trim());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Ingresá un número válido."
+                );
             }
         }
-        JOptionPane.showMessageDialog(null, "Resultado: "+resultado);
     }
 }

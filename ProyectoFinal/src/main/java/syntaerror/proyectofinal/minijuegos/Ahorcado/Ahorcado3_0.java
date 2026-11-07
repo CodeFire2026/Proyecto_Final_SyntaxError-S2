@@ -95,11 +95,11 @@ public class Ahorcado3_0 extends JFrame {
         JPanel contenido = new JPanel();
         contenido.setLayout(new BoxLayout(contenido, BoxLayout.Y_AXIS));
 
-        JLabel titulo = new JLabel("Ahorcado 3.0");
-        titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 28));
+        JLabel titulo = new JLabel("A̵̙̘̟̓͘͝h̴̦͙͓͌̒͝o̴̢̪̒͌̔r̴̻̦̿̓̈́c̴͍͓̠̿͘͠a̴̢͓͙̓̀͠d̸͕̦͊̚͠ö̵͎̠́̀̕");
+        titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         titulo.setAlignmentX(CENTER_ALIGNMENT);
 
-        JLabel instruccion = new JLabel("Introduce la palabra a adivinar (1 a 20 letras)");
+        JLabel instruccion = new JLabel("𝐼𝑛𝑡𝑟𝑜𝑑𝑢𝑐𝑒 𝑙𝑎 𝑝𝑎𝑙𝑎𝑏𝑟𝑎 𝑎 𝑎𝑑𝑖𝑣𝑖𝑛𝑎𝑟 (1 𝒂 20 𝒍𝒆𝒕𝒓𝒂𝒔) ");
         instruccion.setAlignmentX(CENTER_ALIGNMENT);
 
         campoPalabra = new JPasswordField(20);
@@ -112,7 +112,7 @@ public class Ahorcado3_0 extends JFrame {
         });
         echoOriginal = campoPalabra.getEchoChar();
 
-        chkMostrar = new JCheckBox("Mostrar palabra");
+        chkMostrar = new JCheckBox("ɐɹqɐʅɐd ɹɐɹʇsoꟽ");
         chkMostrar.setAlignmentX(CENTER_ALIGNMENT);
         chkMostrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -124,14 +124,14 @@ public class Ahorcado3_0 extends JFrame {
         lblError.setForeground(Color.RED);
         lblError.setAlignmentX(CENTER_ALIGNMENT);
 
-        JButton btnComenzar = new JButton("Comenzar");
+        JButton btnComenzar = new JButton("𝐂𝐨𝐦𝐞𝐧𝐳𝐚𝐫");
         btnComenzar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 comenzarPartida();
             }
         });
 
-        JButton btnSalirInicio = new JButton("Salir");
+        JButton btnSalirInicio = new JButton("𝐒𝐚𝐥𝐢𝐫");
         btnSalirInicio.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 salir();
@@ -231,7 +231,7 @@ public class Ahorcado3_0 extends JFrame {
         }
 
         // ----- Botones de control -----
-        JButton btnNueva = new JButton("Nueva partida");
+        JButton btnNueva = new JButton("𝐍𝐮𝐞𝐯𝐚 𝐏𝐚𝐫𝐭𝐢𝐝𝐚");
         btnNueva.setFocusable(false);
         btnNueva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -239,7 +239,7 @@ public class Ahorcado3_0 extends JFrame {
             }
         });
 
-        JButton btnSalir = new JButton("Salir");
+        JButton btnSalir = new JButton("𝐒𝐚𝐥𝐢𝐫");
         btnSalir.setFocusable(false);
         btnSalir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -291,9 +291,9 @@ public class Ahorcado3_0 extends JFrame {
         String mensaje;
         if (logica.haPerdido()) {
             lblPalabra.setText(logica.palabraConEspacios());
-            mensaje = "Perdiste, Mejor suerte a la próxima. La palabra era: " + logica.getPalabraSecreta();
+            mensaje = "Perdiste, mejor suerte la próxima: " + logica.getPalabraSecreta();
         } else {
-            mensaje = "¡Felicidades Ganaste!";
+            mensaje = "¡Felicidades Ganaste❗";
         }
 
         Object[] opciones = {"Continuar", "Salir"};

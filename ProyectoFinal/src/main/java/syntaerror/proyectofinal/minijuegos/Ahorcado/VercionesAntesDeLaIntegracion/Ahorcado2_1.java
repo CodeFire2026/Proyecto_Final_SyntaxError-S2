@@ -1,4 +1,4 @@
-package syntaxError.proyectofinal.minijuegos.Ahorcado;
+package syntaerror.proyectofinal.minijuegos.Ahorcado.VercionesAntesDeLaIntegracion;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -33,7 +33,7 @@ import javax.swing.SwingUtilities;
  * aciertos, 8 intentos), pero en lugar de la consola y los JOptionPane
  * muestra una ventana con el dibujo del ahorcado, la palabra y un teclado.
  */
-public class AhorcadoGrafico extends JFrame {
+public class Ahorcado2_1 extends JFrame {
 
     private static final int MAX_FALLOS = 8;
 
@@ -53,7 +53,7 @@ public class AhorcadoGrafico extends JFrame {
     private JLabel lblErradas;
     private JButton[] botones;
 
-    public AhorcadoGrafico() {
+    public Ahorcado2_1() {
         super("Ahorcado");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         numFallos = MAX_FALLOS;
@@ -375,7 +375,7 @@ public class AhorcadoGrafico extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AhorcadoGrafico ventana = new AhorcadoGrafico();
+                Ahorcado2_1 ventana = new Ahorcado2_1();
                 ventana.setVisible(true);
                 ventana.nuevaPartida();
             }

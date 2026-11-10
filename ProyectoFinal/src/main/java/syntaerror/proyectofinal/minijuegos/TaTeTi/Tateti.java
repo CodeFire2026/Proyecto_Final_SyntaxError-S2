@@ -1,25 +1,32 @@
+package syntaerror.proyectofinal.minijuegos.TaTeTi;
+
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * PROYECTO INTEGRADOR — TA TE TI (versión en un solo archivo)
- */
-public class Tateti  {
-    public static void main(String[] args) {
-        // Fuerza UTF-8 en la salida para que tildes, "¡" y "¿" se vean bien
-        // sin importar la configuración regional de la consola.
-        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
 
-        Juego juego = new Juego();
-        juego.iniciar();
+ 
+public class Tateti  {
+
+    // Para llamarlo desde el menú
+    public static void jugar(Scanner scanner) {
+        new Juego(scanner).iniciar();
+    }
+
+    public static void main(String[] args) {
+        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
+        jugar(new Scanner(System.in, StandardCharsets.UTF_8));
     }
 }
 
 class Juego {
 
-    private final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+        private final Scanner scanner;
+
+    Juego(Scanner scanner) {
+        this.scanner = scanner;
+    }
     private final Tablero tablero = new Tablero();
 
     public void iniciar() {
